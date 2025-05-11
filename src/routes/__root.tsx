@@ -8,6 +8,7 @@ import {
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { Toaster } from "sonner";
+import { UserActions } from "~/components/user-actions";
 
 export const Route = createRootRouteWithContext<{
   queryClient: QueryClient;
@@ -60,11 +61,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
               Protected
             </Link>
           </div>
-          <div className="">
-            <Link to="/login" activeProps={{ "aria-current": "page" }}>
-              Login / Logout
-            </Link>
-          </div>
+          <UserActions />
         </nav>
         <main className="container">{children}</main>
         <TanStackRouterDevtools position="bottom-right" />

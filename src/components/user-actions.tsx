@@ -1,18 +1,13 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "@tanstack/react-router";
 import { useTransition } from "react";
 import { authClient, sessionQueryOptions } from "~/auth/client";
 
-export const Route = createFileRoute({
-  loader: async ({ context: { queryClient } }) => {
-    await queryClient.prefetchQuery(sessionQueryOptions);
-  },
-  component: RouteComponent,
-});
-
-function RouteComponent() {
+export function UserActions() {
   const queryClient = useQueryClient();
   const { data: session } = useQuery(sessionQueryOptions);
   const [isPending, startTransition] = useTransition();
+  const router = useRouter();
 
   const login = () => {
     startTransition(async () => {
@@ -25,20 +20,17 @@ function RouteComponent() {
     startTransition(async () => {
       await authClient.signOut();
       queryClient.getQueryCache().clear();
+      await router.invalidate();
     });
   };
 
-  return (
-    <div>
-      <p>{session?.session ? `Session Id: ${session.session.id}` : "No session"}</p>
-      <div className="grid">
-        <button disabled={isPending} onClick={login}>
-          Sign in anonymously
-        </button>
-        <button disabled={isPending} onClick={logout} className="secondary">
-          Sign out
-        </button>
-      </div>
-    </div>
+  return session?.session ? (
+    <button disabled={isPending} onClick={logout}>
+      Sign out from session <code>session:{session.session.id}</code>
+    </button>
+  ) : (
+    <button disabled={isPending} onClick={login}>
+      Sign in anonymously
+    </button>
   );
 }

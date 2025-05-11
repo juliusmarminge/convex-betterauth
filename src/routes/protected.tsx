@@ -15,9 +15,7 @@ const getServerSession = createServerFn({ method: "GET" }).handler(async () => {
 export const Route = createFileRoute({
   beforeLoad: async ({ context }) => {
     const serverSession = await getServerSession();
-    if (!serverSession) {
-      throw redirect({ to: "/login" });
-    }
+    if (!serverSession) throw redirect({ to: "/" });
 
     context.queryClient.setQueryData(sessionQueryOptions.queryKey, serverSession);
 

@@ -49,7 +49,7 @@ export function createRouter() {
     },
   });
 
-  return routerWithQueryClient(router as any, queryClient);
+  return routerWithQueryClient(router as any, queryClient) as typeof router;
 }
 
 declare module "@tanstack/react-router" {
