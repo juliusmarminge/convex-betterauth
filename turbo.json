@@ -1,0 +1,15 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "ui": "tui",
+  "tasks": {
+    "dev:vite": {
+      "persistent": true
+    },
+    "dev:convex": {
+      "persistent": true
+    },
+    "build": {
+      "outputs": [".nitro/**", ".output/**", ".vercel/**"]
+    }
+  }
+}
