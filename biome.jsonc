@@ -6,7 +6,12 @@
     "useIgnoreFile": true
   },
   "files": {
-    "ignore": [".tanstack-start/**", "src/routeTree.gen.ts", "convex/_generated/**"]
+    "ignore": [
+      ".tanstack-start/**",
+      "src/tanstack-start.d.ts",
+      "src/routeTree.gen.ts",
+      "convex/_generated/**"
+    ]
   },
   "organizeImports": {
     "enabled": true

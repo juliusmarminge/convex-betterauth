@@ -31,34 +31,6 @@ const schema = defineSchema({
     publicKey: v.string(),
     privateKey: v.string(),
   }),
-  oauthApplication: defineTable({
-    clientId: v.string(),
-    clientSecret: v.string(),
-    name: v.string(),
-    redirectURLs: v.string(),
-    metadata: v.optional(v.string()),
-    type: v.string(),
-    disabled: v.boolean(),
-    userId: v.optional(v.id("user")),
-    updatedAt: v.string(),
-  }).index("byClientId", ["clientId"]),
-  oauthAccessToken: defineTable({
-    accessToken: v.string(),
-    refreshToken: v.string(),
-    accessTokenExpiresAt: v.string(),
-    refreshTokenExpiresAt: v.string(),
-    clientId: v.id("oauthApplication"),
-    userId: v.id("user"),
-    scopes: v.string(),
-    updatedAt: v.string(),
-  }),
-  oauthConsent: defineTable({
-    userId: v.id("user"),
-    clientId: v.id("oauthApplication"),
-    scopes: v.string(),
-    consentGiven: v.boolean(),
-    updatedAt: v.string(),
-  }),
   //
   // End BetterAuth
   //
