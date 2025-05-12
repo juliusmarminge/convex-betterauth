@@ -16,7 +16,6 @@ export const sessionQueryOptions = queryOptions({
   queryKey: ["session"],
   queryFn: async () => {
     const session = await authClient.getSession();
-    if (session.error) throw session.error;
     return session.data;
   },
 });

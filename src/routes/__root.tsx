@@ -19,13 +19,10 @@ export const Route = createRootRouteWithContext<{
       { rel: "stylesheet", href: "https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" },
     ],
   }),
-  loader: async ({ context: { queryClient } }) => {
-    const serverSession = await getServerSession();
-    if (serverSession) {
-      // Hydrate the query client with the session fetched server side
-      queryClient.setQueryData(sessionQueryOptions.queryKey, serverSession);
-    }
-    return { session: serverSession };
+  loader: ({ context: { queryClient } }) => {
+    // Start fetching the session eagerly on the server and put it in the query cache
+    const query = queryClient.getQueryCache().build(queryClient, sessionQueryOptions as any);
+    void query.fetch(undefined, { initialPromise: getServerSession() });
   },
   component: RootComponent,
   notFoundComponent: () => <h1>404</h1>,

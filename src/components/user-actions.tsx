@@ -1,10 +1,10 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import { useTransition } from "react";
 import { authClient, jwtQueryOptions, sessionQueryOptions } from "~/auth/client";
 
 export function UserActions() {
   const queryClient = useQueryClient();
-  const { data: session } = useQuery(sessionQueryOptions);
+  const { data: session } = useSuspenseQuery(sessionQueryOptions);
   const [isPending, startTransition] = useTransition();
 
   const login = () => {
