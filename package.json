@@ -5,10 +5,10 @@
   "type": "module",
   "scripts": {
     "dev:vite": "vite dev",
-    "dev:convex": "convex dev",
+    "dev:convex": "convex dev --local",
     "dev": "turbo watch dev:vite dev:convex",
     "build": "vite build",
-    "start": "node .output/server/index.mjs"
+    "start": "node --env-file=.env.local .output/server/index.mjs"
   },
   "dependencies": {
     "@better-auth-kit/convex": "^1.2.2",

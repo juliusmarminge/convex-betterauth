@@ -11,8 +11,8 @@ const convexClient = new ConvexHttpClient(import.meta.env.VITE_CONVEX_URL, {
 
 export const ALGORITHM = "RS256";
 export const AUDIENCE = "convex";
-export const ISSUER = `https://${import.meta.env.VITE_SITE_URL}/api/auth`;
-export const BETTER_AUTH_SECRET = "YAveJvxbFhEFVWGms0BzRplxkja3UTLP"; // this should go in your .env
+export const ISSUER = `${import.meta.env.VITE_SITE_URL?.includes("localhost") ? "http" : "https"}://${import.meta.env.VITE_SITE_URL}/api/auth`;
+export const BETTER_AUTH_SECRET = "YAveJvxbFhEFVWGms0BzRplxkja3UTLP"; // TODO: Move to .env
 
 export const auth = betterAuth({
   secret: BETTER_AUTH_SECRET,

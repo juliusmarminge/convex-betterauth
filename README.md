@@ -11,11 +11,10 @@ pnpm dev
 
 Configure Convex. When prompted, set the necessary environment variables:
 
-- BETTER_AUTH_DOMAIN: The domain where your app is deployed, e.g. `convex-betterauth.vercel.app`
-- BETTER_AUTH_APPLICATION_ID: The audience claim in the JWTs, e.g. `convex`. MUST MATCH [`AUDIENCE` in `src/auth/server.ts`](./src/auth/server.ts)
+- BETTER_AUTH_URL: The URL where your app is deployed, e.g. `https://convex-betterauth.vercel.app` or `http://localhost:3000`. This is validated against the issuer (`iss`) in the JWTs.
 
-Then it should run!
+Then it should run! Try and increment the counter and it will give you Unauthorized. Hit the sign in button and then you'll be allowed to increment the count!
 
-## TODOs
+## Caveats
 
-- [ ] Currently Convex can only validate the JWTs when deployed. Gotta figure out the local story. Might be able to use the [OAuth Proxy Plugin](https://www.better-auth.com/docs/plugins/oauth-proxy) for that?
+When developing, you need to use a local convex instance. You can not use a cloud dev environment as that will not be able to hit your OIDC discovery endpoints required to verify the JWTs.

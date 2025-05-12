@@ -8,6 +8,7 @@ import {
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { Toaster } from "sonner";
+import { getServerSession, sessionQueryOptions } from "~/auth/client";
 import { UserActions } from "~/components/user-actions";
 
 export const Route = createRootRouteWithContext<{
@@ -16,21 +17,28 @@ export const Route = createRootRouteWithContext<{
   head: () => ({
     links: [
       { rel: "stylesheet", href: "https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" },
-      {
-        rel: "stylesheet",
-        href: "https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.colors.min.css",
-      },
     ],
   }),
+  loader: async ({ context: { queryClient } }) => {
+    const serverSession = await getServerSession();
+    if (serverSession) {
+      // Hydrate the query client with the session fetched server side
+      queryClient.setQueryData(sessionQueryOptions.queryKey, serverSession);
+    }
+    return { session: serverSession };
+  },
   component: RootComponent,
   notFoundComponent: () => <h1>404</h1>,
-  errorComponent: ({ error, reset }) => (
-    <div>
-      <h1>An error occurred</h1>
-      <pre>{error.message}</pre>
-      <button onClick={reset}>Reset</button>
-    </div>
-  ),
+  errorComponent: ({ error, reset }) => {
+    console.error(error);
+    return (
+      <div>
+        <h1>An error occurred</h1>
+        <pre>{error.message}</pre>
+        <button onClick={reset}>Reset</button>
+      </div>
+    );
+  },
 });
 
 function RootComponent() {
